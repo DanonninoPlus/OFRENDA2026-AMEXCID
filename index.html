@@ -637,35 +637,64 @@
 
   <!-- ==================== SCRIPT ==================== -->
   <script>
-    // ============ MODAL GALERÍA (con bloqueo de scroll) ============
-    const modal = document.getElementById('modal-galeria');
-    const btnAbrir = document.getElementById('btn-abrir-modal');
-    const btnCerrar1 = document.getElementById('btn-cerrar-modal');
-    const btnCerrar2 = document.getElementById('btn-cerrar-modal-2');
+        // ============ MODALES: PROCESO Y LIGHTBOX FOTO ============
+    const modalProceso = document.getElementById('modal-galeria');
+    const modalFoto    = document.getElementById('modal-foto');
+    const btnAbrir     = document.getElementById('btn-abrir-modal');
 
-    function abrirModal() {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+    // --- Modal Proceso de creación ---
+    function abrirModalProceso() {
+      modalProceso.classList.remove('hidden');
+      modalProceso.classList.add('flex');
       document.body.style.overflow = 'hidden';
     }
-    function cerrarModal() {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+    function cerrarModalProceso() {
+      modalProceso.classList.add('hidden');
+      modalProceso.classList.remove('flex');
       document.body.style.overflow = '';
     }
-
-    btnAbrir.addEventListener('click', abrirModal);
-    btnCerrar1.addEventListener('click', cerrarModal);
-    btnCerrar2.addEventListener('click', cerrarModal);
-
-    // Cerrar con clic fuera del contenido
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) cerrarModal();
+    btnAbrir.addEventListener('click', abrirModalProceso);
+    document.getElementById('btn-cerrar-modal').addEventListener('click', cerrarModalProceso);
+    document.getElementById('btn-cerrar-modal-2').addEventListener('click', cerrarModalProceso);
+    modalProceso.addEventListener('click', (e) => {
+      if (e.target === modalProceso) cerrarModalProceso();
     });
 
-    // Cerrar con tecla Escape
+    // --- Lightbox: ver foto individual ---
+    const fotoImg     = document.getElementById('foto-ampliada-img');
+    const fotoTitulo  = document.getElementById('foto-ampliada-titulo');
+    const fotoDesc    = document.getElementById('foto-ampliada-desc');
+
+    function abrirFoto(card) {
+      fotoImg.src = card.dataset.src;
+      fotoImg.alt = card.dataset.alt || '';
+      fotoTitulo.textContent = card.dataset.titulo || '';
+      fotoDesc.textContent   = card.dataset.desc || '';
+      modalFoto.classList.remove('hidden');
+      modalFoto.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+    function cerrarFoto() {
+      modalFoto.classList.add('hidden');
+      modalFoto.classList.remove('flex');
+      document.body.style.overflow = '';
+      fotoImg.src = '';
+    }
+
+    document.querySelectorAll('.foto-card').forEach(card => {
+      card.addEventListener('click', () => abrirFoto(card));
+    });
+    document.getElementById('btn-cerrar-foto').addEventListener('click', cerrarFoto);
+    document.getElementById('btn-cerrar-foto-2').addEventListener('click', cerrarFoto);
+    modalFoto.addEventListener('click', (e) => {
+      if (e.target === modalFoto) cerrarFoto();
+    });
+
+    // --- Cerrar con Escape cualquiera de los dos ---
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.classList.contains('hidden')) cerrarModal();
+      if (e.key !== 'Escape') return;
+      if (!modalFoto.classList.contains('hidden'))    cerrarFoto();
+      if (!modalProceso.classList.contains('hidden')) cerrarModalProceso();
     });
 
     // ============ AUDIO: NARRACIÓN DE LA CALAVERITA ============
