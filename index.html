@@ -6,20 +6,17 @@
   <title>Ofrenda AMEXCID 2026 — Animecha Kejtsïtakua</title>
   <meta name="description" content="Ofrenda de Día de Muertos de AMEXCID Planta Baja. Un homenaje a la Noche de Ánimas en Janitzio, Michoacán.">
 
-  <!-- ==================== OPEN GRAPH ==================== -->
   <meta property="og:title" content="Ofrenda AMEXCID 2026 — Animecha Kejtsïtakua">
   <meta property="og:description" content="Homenaje a la Noche de Ánimas en Janitzio, Michoacán.">
   <meta property="og:image" content="img/IMG_0854.jpg">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#121221">
 
-  <!-- ==================== FUENTES ==================== -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
 
-  <!-- ==================== TAILWIND ==================== -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">
     tailwind.config = {
@@ -76,21 +73,29 @@
     };
   </script>
 
-  <!-- ==================== ESTILOS BASE ==================== -->
   <style>
     @layer base {
-      html, body { width: 100%; margin: 0; padding: 0; overflow-x: hidden; }
+      html, body { width: 100%; margin: 0; padding: 0; }
       html {
         scroll-behavior: smooth;
         scroll-padding-top: calc(5rem + env(safe-area-inset-top, 0px));
+        overflow-y: auto;
       }
-      body { overscroll-behavior: none; background-color: #121221; }
+      body {
+        background-color: #121221;
+        overflow-x: clip;
+        overflow-y: auto;
+        overscroll-behavior-y: none;
+      }
       .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
       .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
       main > :first-child { margin-top: 0 !important; }
       main > :last-child { margin-bottom: 0 !important; }
     }
-    ::-webkit-scrollbar { display: none; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #121221; }
+    ::-webkit-scrollbar-thumb { background: #343344; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #574235; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -99,6 +104,14 @@
         scroll-behavior: auto !important;
       }
     }
+
+    /* En desktop mostramos el nav superior; en móvil el inferior */
+    @media (min-width: 1024px) {
+      .nav-mobile-only { display: none !important; }
+    }
+    @media (max-width: 1023.98px) {
+      .nav-desktop-only { display: none !important; }
+    }
   </style>
 </head>
 
@@ -106,13 +119,13 @@
 
   <!-- ==================== HEADER ==================== -->
   <header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-    <div class="h-20 max-w-3xl mx-auto px-margin flex items-center justify-between gap-space-sm">
-      <div class="flex items-center gap-space-sm min-w-0 flex-1">
-        <img alt="Emblema Animecha Kejtsïtakua Michoacán" class="h-8 w-auto object-contain shrink-0"
+    <div class="h-20 max-w-7xl mx-auto px-margin md:px-8 lg:px-12 flex items-center justify-between gap-space-sm">
+      <!-- Logo + nombre -->
+      <div class="flex items-center gap-space-sm min-w-0">
+        <img alt="Emblema Animecha Kejtsïtakua Michoacán" class="h-8 md:h-9 w-auto object-contain shrink-0"
              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDonhDmMEcu8fcEga7SM_VigwNN63yo6BkX6ucM9eQ12wXcfUs239lTc3KTB-EG77iRjv_kFvwVe78pc1tFf_iEdpcxiXTHUvNZrNkuirGZX2T3pOUICLuKBAHNtIGY4Uiw9NlTzvttVx7CA8Gr12cpKLxRFJ0NNtjixDQvWwclUqXJKKwqDa_f7gK56itY1UgM7cznWJxAATOt0YIQvDpyvtxgP3DWa52XOeL6iZXy">
         <div class="flex flex-col min-w-0">
           <div class="flex items-center gap-1.5 flex-wrap">
-            <!-- En móvil: solo SRE; en desktop: nombre completo -->
             <span class="hidden sm:inline font-label-caption text-label-caption text-primary tracking-widest uppercase font-semibold truncate">Secretaría de Relaciones Exteriores</span>
             <span class="sm:hidden font-label-caption text-label-caption text-primary tracking-widest uppercase font-semibold">SRE</span>
             <span class="px-1.5 py-0.5 rounded-full bg-secondary-container/30 text-secondary font-label-caption text-[9px] uppercase tracking-wider shrink-0">SRE</span>
@@ -120,17 +133,25 @@
           <h1 class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">AMEXCID</h1>
         </div>
       </div>
+
+      <!-- Nav desktop (solo lg+) -->
+      <nav class="nav-desktop-only hidden lg:flex items-center gap-8">
+        <a href="#" class="font-label-md text-label-md uppercase tracking-wider text-primary border-b-2 border-primary pb-1">Inicio</a>
+        <a href="#recorrido" class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors">Estructura</a>
+        <a href="#galeria-perspectivas" class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors">Galería</a>
+        <a href="#voto" class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors">La leyenda</a>
+      </nav>
     </div>
   </header>
 
   <!-- ==================== MAIN ==================== -->
-  <main class="flex flex-col relative w-full pt-[calc(5rem+env(safe-area-inset-top,0px))] pb-24 bg-surface min-h-[100dvh]">
-    <div class="flex flex-col w-full text-on-surface max-w-3xl mx-auto">
+  <main class="flex flex-col relative w-full pt-[calc(5rem+env(safe-area-inset-top,0px))] pb-24 lg:pb-12 bg-surface min-h-[100dvh]">
+    <div class="flex flex-col w-full text-on-surface max-w-7xl mx-auto">
 
       <!-- ========== HERO ========== -->
-      <section class="relative w-full px-margin md:px-8 pt-space-md pb-space-lg flex flex-col gap-space-md overflow-hidden">
-        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full bg-primary/15 blur-3xl pointer-events-none"></div>
-        <div class="absolute top-20 -right-20 w-64 h-64 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+      <section class="relative w-full px-margin md:px-8 lg:px-12 pt-space-md lg:pt-16 pb-space-lg lg:pb-24 flex flex-col gap-space-md overflow-hidden">
+        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 lg:w-[500px] h-80 lg:h-[500px] rounded-full bg-primary/15 blur-3xl pointer-events-none"></div>
+        <div class="absolute top-20 -right-20 w-64 lg:w-96 h-64 lg:h-96 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
 
         <div class="flex items-center justify-between gap-space-sm">
           <div class="inline-flex items-center gap-space-xs px-3 py-1 rounded-full bg-surface-container-high text-primary shadow-[0_0_14px_rgba(255,183,134,0.15)]">
@@ -143,118 +164,130 @@
           </div>
         </div>
 
-        <div class="relative w-full rounded-xl bg-surface-container-low p-space-md shadow-xl flex flex-col gap-space-md overflow-hidden">
+        <!-- Hero card: 1 col en móvil, 2 col en lg -->
+        <div class="relative w-full rounded-xl lg:rounded-2xl bg-surface-container-low p-space-md lg:p-8 shadow-xl overflow-hidden">
           <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"></div>
 
-          <div class="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-lg overflow-hidden flex flex-col items-center justify-center">
-            <img class="absolute inset-0 w-full h-full object-cover"
-                 alt="Arco de inicio de la ofrenda"
-                 src="img/IMG_0854.jpg"
-                 loading="eager">
-            <div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md lg:gap-10 items-center">
+            <!-- Imagen -->
+            <div class="relative w-full aspect-[16/10] lg:aspect-[4/5] rounded-lg lg:rounded-xl overflow-hidden flex flex-col items-center justify-center lg:order-1">
+              <img class="absolute inset-0 w-full h-full object-cover"
+                   alt="Arco de inicio de la ofrenda"
+                   src="img/IMG_0854.jpg"
+                   loading="eager">
+              <div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent lg:bg-gradient-to-t lg:from-surface-container-lowest/60 lg:via-transparent lg:to-transparent"></div>
 
-            <div class="relative z-10 flex flex-col items-center text-center px-space-sm pt-space-lg">
-              <span class="font-label-md text-label-md uppercase tracking-widest text-primary-fixed-dim">Animecha Kejtsïtakua</span>
-              <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface leading-tight mt-0.5">
-                Ofrenda a las ánimas
-              </h2>
+              <div class="relative z-10 flex flex-col items-center text-center px-space-sm pt-space-lg lg:hidden">
+                <span class="font-label-md text-label-md uppercase tracking-widest text-primary-fixed-dim">Animecha Kejtsïtakua</span>
+                <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface leading-tight mt-0.5">
+                  Ofrenda a las ánimas
+                </h2>
+              </div>
             </div>
-          </div>
 
-          <div class="flex flex-col gap-space-xs text-center">
-            <p class="font-body-md md:text-body-lg text-body-md md:text-body-lg text-on-surface-variant">
-              Bienvenido a nuestra ofrenda. Un homenaje reverente a la noche sagrada de Janitzio y las almas que cruzan el lago en alas de la mariposa monarca.
-            </p>
-          </div>
+            <!-- Texto + CTAs -->
+            <div class="flex flex-col gap-space-md lg:order-2">
+              <div class="hidden lg:flex flex-col gap-2">
+                <span class="font-label-md text-label-md uppercase tracking-widest text-primary-fixed-dim">Animecha Kejtsïtakua</span>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface leading-tight">
+                  Ofrenda a las ánimas
+                </h2>
+              </div>
 
-          <div class="flex flex-col gap-space-xs pt-space-xs">
-            <a class="w-full py-3 px-space-md rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_24px_rgba(245,124,0,0.35)] active:scale-[0.98] transition-transform" href="#recorrido">
-              <span class="material-symbols-outlined text-[20px]">explore</span>
-              <span class="truncate">Iniciar recorrido</span>
-            </a>
-            <a class="w-full py-3 px-space-md rounded-full bg-surface-container-high text-tertiary font-label-lg text-label-lg tracking-wider flex items-center justify-center gap-space-xs hover:bg-surface-bright active:scale-[0.98] transition-transform" href="#voto">
-              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
-              <span class="truncate">¿Qué es Animecha Kejtsïtakua?</span>
-            </a>
+              <p class="font-body-md md:text-body-lg lg:text-lg text-body-md md:text-body-lg text-on-surface-variant lg:leading-relaxed">
+                Bienvenido a nuestra ofrenda. Un homenaje reverente a la noche sagrada de Janitzio y las almas que cruzan el lago en alas de la mariposa monarca.
+              </p>
+
+              <div class="flex flex-col sm:flex-row gap-space-xs pt-space-xs">
+                <a class="flex-1 py-3 px-space-md rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_24px_rgba(245,124,0,0.35)] active:scale-[0.98] transition-transform"
+                   href="#recorrido">
+                  <span class="material-symbols-outlined text-[20px]">explore</span>
+                  <span class="truncate">Iniciar recorrido</span>
+                </a>
+                <a class="flex-1 py-3 px-space-md rounded-full bg-surface-container-high text-tertiary font-label-lg text-label-lg tracking-wider flex items-center justify-center gap-space-xs hover:bg-surface-bright active:scale-[0.98] transition-transform"
+                   href="#voto">
+                  <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <span class="truncate">¿Qué es Animecha?</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ========== LOS 3 NIVELES ========== -->
-      <section class="w-full px-margin md:px-8 pb-space-xl flex flex-col gap-space-md" id="recorrido">
+      <section class="w-full px-margin md:px-8 lg:px-12 pb-space-xl lg:pb-24 flex flex-col gap-space-md" id="recorrido">
         <div class="flex items-center justify-between gap-1">
           <div class="flex items-center gap-1.5 text-primary">
-            <span class="material-symbols-outlined text-[16px]">layers</span>
-            <h3 class="font-headline-sm text-headline-sm text-on-surface font-headline-md">Estructura:</h3>
+            <span class="material-symbols-outlined text-[16px] lg:text-[20px]">layers</span>
+            <h3 class="font-headline-sm lg:text-2xl text-headline-sm text-on-surface">Estructura:</h3>
           </div>
           <span class="text-outline text-label-caption uppercase tracking-wider font-semibold">Los Tres Niveles</span>
         </div>
 
-        <div class="grid grid-cols-1 gap-2">
-          <div class="bg-surface-container-low rounded-lg p-2.5 flex items-start gap-3 border-l-2 border-tertiary shadow-sm">
-            <div class="w-8 h-8 rounded-full bg-tertiary-container/30 text-tertiary flex items-center justify-center shrink-0">
-              <span class="material-symbols-outlined text-[18px]">wb_twilight</span>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-6">
+          <div class="bg-surface-container-low rounded-lg lg:rounded-2xl p-2.5 lg:p-5 flex items-start gap-3 border-l-2 border-tertiary shadow-sm">
+            <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-tertiary-container/30 text-tertiary flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[18px] lg:text-[22px]">wb_twilight</span>
             </div>
             <div class="flex flex-col min-w-0">
-              <div class="flex items-center justify-between gap-1">
-                <span class="font-label-lg text-label-lg font-semibold text-on-surface">1. Auándarhu</span>
-                <span class="text-[10px] uppercase font-semibold text-tertiary">El firmamento</span>
+              <div class="flex items-center justify-between gap-1 lg:flex-col lg:items-start lg:gap-0.5">
+                <span class="font-label-lg lg:text-base text-label-lg font-semibold text-on-surface">1. Auándarhu</span>
+                <span class="text-[10px] lg:text-xs uppercase font-semibold text-tertiary">El firmamento</span>
               </div>
-              <p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Las tres cruces superiores del arco u’atsakurï representan el nivel celestial. Por este portal las almas reciben permiso para transitar hacia el plano terrenal. Convertidas en mariposas monarca, vuelan sobre el lago hacia Janitzio.</p>
+              <p class="font-body-sm lg:text-sm text-body-sm text-on-surface-variant leading-snug lg:leading-relaxed mt-1">Las tres cruces superiores del arco u’atsakurï representan el nivel celestial. Por este portal las almas reciben permiso para transitar hacia el plano terrenal. Convertidas en mariposas monarca, vuelan sobre el lago hacia Janitzio.</p>
             </div>
           </div>
 
-          <div class="bg-surface-container-low rounded-lg p-2.5 flex items-start gap-3 border-l-2 border-secondary shadow-sm">
-            <div class="w-8 h-8 rounded-full bg-secondary-container/30 text-secondary flex items-center justify-center shrink-0">
-              <span class="material-symbols-outlined text-[18px]">sailing</span>
+          <div class="bg-surface-container-low rounded-lg lg:rounded-2xl p-2.5 lg:p-5 flex items-start gap-3 border-l-2 border-secondary shadow-sm">
+            <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-secondary-container/30 text-secondary flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[18px] lg:text-[22px]">sailing</span>
             </div>
             <div class="flex flex-col min-w-0">
-              <div class="flex items-center justify-between gap-1">
-                <span class="font-label-lg text-label-lg font-semibold text-on-surface">2. Echerio</span>
-                <span class="text-[10px] uppercase font-semibold text-secondary">La Tierra</span>
+              <div class="flex items-center justify-between gap-1 lg:flex-col lg:items-start lg:gap-0.5">
+                <span class="font-label-lg lg:text-base text-label-lg font-semibold text-on-surface">2. Echerio</span>
+                <span class="text-[10px] lg:text-xs uppercase font-semibold text-secondary">La Tierra</span>
               </div>
-              <p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Aquí se espera a los difuntos con lo que disfrutaron en vida: frutas, corundas y pan de muerto, a veces con forma humana. Se sirven en barro verde, candeleros de cobre y catrinas de barro rojo hechas por artesanos de la región. El cempasúchil (tiringuini tzintziqui) y las velas iluminan el altar hasta el amanecer del 3 de noviembre.</p>
+              <p class="font-body-sm lg:text-sm text-body-sm text-on-surface-variant leading-snug lg:leading-relaxed mt-1">Aquí se espera a los difuntos con lo que disfrutaron en vida: frutas, corundas y pan de muerto, a veces con forma humana. Se sirven en barro verde, candeleros de cobre y catrinas de barro rojo hechas por artesanos de la región. El cempasúchil (tiringuini tzintziqui) y las velas iluminan el altar hasta el amanecer del 3 de noviembre.</p>
             </div>
           </div>
 
-          <div class="bg-surface-container-low rounded-lg p-2.5 flex items-start gap-3 border-l-2 border-primary shadow-sm">
-            <div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
-              <span class="material-symbols-outlined text-[18px]">grass</span>
+          <div class="bg-surface-container-low rounded-lg lg:rounded-2xl p-2.5 lg:p-5 flex items-start gap-3 border-l-2 border-primary shadow-sm">
+            <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[18px] lg:text-[22px]">grass</span>
             </div>
             <div class="flex flex-col min-w-0">
-              <div class="flex items-center justify-between gap-1">
-                <span class="font-label-lg text-label-lg font-semibold text-on-surface">3. K’umienchakuarhu</span>
-                <span class="text-[10px] uppercase font-semibold text-primary">El lugar de las sombras</span>
+              <div class="flex items-center justify-between gap-1 lg:flex-col lg:items-start lg:gap-0.5">
+                <span class="font-label-lg lg:text-base text-label-lg font-semibold text-on-surface">3. K’umienchakuarhu</span>
+                <span class="text-[10px] lg:text-xs uppercase font-semibold text-primary">El lugar de las sombras</span>
               </div>
-              <p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Es el reino de la noche, donde yacen en silencio (uirucumani) quienes ya partieron, como Alfonso García Robles, cuya foto está en el altar. Cada 2 de noviembre cruzan hacia este mundo para convivir con sus parientes.</p>
+              <p class="font-body-sm lg:text-sm text-body-sm text-on-surface-variant leading-snug lg:leading-relaxed mt-1">Es el reino de la noche, donde yacen en silencio (uirucumani) quienes ya partieron, como Alfonso García Robles, cuya foto está en el altar. Cada 2 de noviembre cruzan hacia este mundo para convivir con sus parientes.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ========== GALERÍA DE PERSPECTIVAS ========== -->
-      <section class="w-full px-margin md:px-8 pb-space-xl flex flex-col gap-space-md" id="galeria-perspectivas">
+      <!-- ========== GALERÍA ========== -->
+      <section class="w-full px-margin md:px-8 lg:px-12 pb-space-xl lg:pb-24 flex flex-col gap-space-md" id="galeria-perspectivas">
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-1.5 text-tertiary">
             <span class="material-symbols-outlined text-[16px]">photo_camera</span>
             <span class="font-label-caption text-label-caption uppercase tracking-widest">Registro Visual</span>
           </div>
-          <h3 class="font-headline-md text-headline-md text-on-surface">Perspectivas del Altar</h3>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">Detalles y ángulos de nuestra ofrenda en Planta Baja.</p>
+          <h3 class="font-headline-md lg:text-3xl text-headline-md text-on-surface">Perspectivas del Altar</h3>
+          <p class="font-body-sm lg:text-base text-body-sm text-on-surface-variant">Detalles y ángulos de nuestra ofrenda en Planta Baja.</p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-2 gap-space-sm">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-space-sm lg:gap-4">
           <!-- Foto 1 -->
           <button type="button" class="foto-card relative rounded-xl overflow-hidden bg-surface-container-low border border-outline-variant/30 flex flex-col group shadow-md text-left active:scale-[0.98] transition-transform"
                   data-titulo="Presentación de la ofrenda"
                   data-desc="El arco, flores y mariposas"
                   data-src="img/IMG_0118.jpg"
                   data-alt="Vista Frontal: El gran arco de flores y mariposas">
-            <div class="relative w-full h-36 md:h-44 overflow-hidden">
+            <div class="relative w-full h-36 md:h-44 lg:h-52 overflow-hidden">
               <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                   src="img/IMG_0118.jpg"
-                   alt="Vista Frontal: El gran arco de flores y mariposas"
-                   loading="lazy">
+                   src="img/IMG_0118.jpg" alt="Vista Frontal: El gran arco de flores y mariposas" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
               <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-container-highest/80 backdrop-blur-md text-primary font-label-caption text-[10px] uppercase tracking-wider font-semibold">Vista Frontal</span>
               <span class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-surface-container-highest/80 backdrop-blur-md flex items-center justify-center text-on-surface">
@@ -273,11 +306,9 @@
                   data-desc="Las canoas, las mariposas y las tumbas"
                   data-src="img/IMG_0873.jpg"
                   data-alt="Perspectiva">
-            <div class="relative w-full h-36 md:h-44 overflow-hidden">
+            <div class="relative w-full h-36 md:h-44 lg:h-52 overflow-hidden">
               <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                   src="img/IMG_0873.jpg"
-                   alt="Perspectiva"
-                   loading="lazy">
+                   src="img/IMG_0873.jpg" alt="Perspectiva" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
               <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-container-highest/80 backdrop-blur-md text-secondary font-label-caption text-[10px] uppercase tracking-wider font-semibold">Perspectiva</span>
               <span class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-surface-container-highest/80 backdrop-blur-md flex items-center justify-center text-on-surface">
@@ -296,11 +327,9 @@
                   data-desc="Las canoas y el camino iluminado"
                   data-src="img/IMG_0856.jpg"
                   data-alt="Espejo de Agua: Canoas y redes purépechas">
-            <div class="relative w-full h-36 md:h-44 overflow-hidden">
+            <div class="relative w-full h-36 md:h-44 lg:h-52 overflow-hidden">
               <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                   src="img/IMG_0856.jpg"
-                   alt="Espejo de Agua: Canoas y redes purépechas"
-                   loading="lazy">
+                   src="img/IMG_0856.jpg" alt="Espejo de Agua: Canoas y redes purépechas" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
               <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-container-highest/80 backdrop-blur-md text-tertiary font-label-caption text-[10px] uppercase tracking-wider font-semibold">Espejo de Agua</span>
               <span class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-surface-container-highest/80 backdrop-blur-md flex items-center justify-center text-on-surface">
@@ -319,11 +348,9 @@
                   data-desc="Resplandor de cirios y velas"
                   data-src="img/IMG_0871.jpg"
                   data-alt="La ofrenda">
-            <div class="relative w-full h-36 md:h-44 overflow-hidden">
+            <div class="relative w-full h-36 md:h-44 lg:h-52 overflow-hidden">
               <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                   src="img/IMG_0871.jpg"
-                   alt="La ofrenda"
-                   loading="lazy">
+                   src="img/IMG_0871.jpg" alt="La ofrenda" loading="lazy">
               <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
               <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-container-highest/80 backdrop-blur-md text-primary-fixed-dim font-label-caption text-[10px] uppercase tracking-wider font-semibold">La Ofrenda</span>
               <span class="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-surface-container-highest/80 backdrop-blur-md flex items-center justify-center text-on-surface">
@@ -344,192 +371,180 @@
         </button>
       </section>
 
-      <!-- ========== SIMBOLOGÍA Y ELEMENTOS SAGRADOS ========== -->
-      <section class="w-full px-margin md:px-8 pb-space-xl flex flex-col gap-space-md">
+      <!-- ========== SIMBOLOGÍA ========== -->
+      <section class="w-full px-margin md:px-8 lg:px-12 pb-space-xl lg:pb-24 flex flex-col gap-space-md">
         <div class="flex flex-col gap-1">
           <div class="flex items-center gap-1.5 text-secondary">
             <span class="material-symbols-outlined text-[16px]">spa</span>
             <span class="font-label-caption text-label-caption uppercase tracking-widest">Simbología</span>
           </div>
-          <h3 class="font-headline-md text-headline-md text-on-surface">Elementos Sagrados</h3>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">
+          <h3 class="font-headline-md lg:text-3xl text-headline-md text-on-surface">Elementos Sagrados</h3>
+          <p class="font-body-sm lg:text-base text-body-sm text-on-surface-variant">
             Elementos presentes en nuestra ofrenda física y su significado ancestral.
           </p>
         </div>
 
-        <div class="flex flex-col gap-space-sm">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <!-- Mariposas -->
-            <div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1.5 shadow-sm border border-outline/10">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-md bg-surface-container-high text-primary flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">filter_vintage</span>
-                </div>
-                <span class="font-label-md text-label-md font-semibold text-on-surface truncate">Mariposas monarca</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
+          <div class="bg-surface-container rounded-lg lg:rounded-xl p-2.5 lg:p-4 flex flex-col gap-1.5 lg:gap-2 shadow-sm border border-outline/10 hover:border-outline/30 transition-colors">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 lg:w-9 lg:h-9 rounded-md bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px] lg:text-[20px]">filter_vintage</span>
               </div>
-              <p class="font-body-sm text-[11px] leading-tight text-on-surface-variant">Para los purépechas representan a los ancestros que regresan a visitarlos en Día de Muertos, y en su lengua se les llama parákata. Su migración comienza en octubre y su llegada a México coincide con la fiesta.</p>
+              <span class="font-label-md lg:text-sm text-label-md font-semibold text-on-surface truncate">Mariposas monarca</span>
             </div>
+            <p class="font-body-sm lg:text-sm text-[11px] lg:text-[13px] leading-tight lg:leading-relaxed text-on-surface-variant">Para los purépechas representan a los ancestros que regresan a visitarlos en Día de Muertos, y en su lengua se les llama parákata. Su migración comienza en octubre y su llegada a México coincide con la fiesta.</p>
+          </div>
 
-            <!-- Cempasúchil -->
-            <div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1.5 shadow-sm border border-outline/10">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-md bg-surface-container-high text-tertiary flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">flare</span>
-                </div>
-                <span class="font-label-md text-label-md font-semibold text-on-surface truncate">Cempasúchil</span>
+          <div class="bg-surface-container rounded-lg lg:rounded-xl p-2.5 lg:p-4 flex flex-col gap-1.5 lg:gap-2 shadow-sm border border-outline/10 hover:border-outline/30 transition-colors">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 lg:w-9 lg:h-9 rounded-md bg-surface-container-high text-tertiary flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px] lg:text-[20px]" style="font-variation-settings: 'FILL' 1;">flare</span>
               </div>
-              <p class="font-body-sm text-[11px] leading-tight text-on-surface-variant">Decora las tumbas en forma de cruz, con pétalos regados o dibujando corazones. En los altares también forma caminos de pétalos.</p>
+              <span class="font-label-md lg:text-sm text-label-md font-semibold text-on-surface truncate">Cempasúchil</span>
             </div>
+            <p class="font-body-sm lg:text-sm text-[11px] lg:text-[13px] leading-tight lg:leading-relaxed text-on-surface-variant">Decora las tumbas en forma de cruz, con pétalos regados o dibujando corazones. En los altares también forma caminos de pétalos.</p>
+          </div>
 
-            <!-- Candelabros -->
-            <div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1.5 shadow-sm border border-outline/10">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-md bg-surface-container-high text-primary-fixed-dim flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">candle</span>
-                </div>
-                <span class="font-label-md text-label-md font-semibold text-on-surface truncate">Candelabros de cobre</span>
+          <div class="bg-surface-container rounded-lg lg:rounded-xl p-2.5 lg:p-4 flex flex-col gap-1.5 lg:gap-2 shadow-sm border border-outline/10 hover:border-outline/30 transition-colors">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 lg:w-9 lg:h-9 rounded-md bg-surface-container-high text-primary-fixed-dim flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px] lg:text-[20px]" style="font-variation-settings: 'FILL' 1;">candle</span>
               </div>
-              <p class="font-body-sm text-[11px] leading-tight text-on-surface-variant">En Santa Clara del Cobre, el trabajo del cobre martillado tiene raíces prehispánicas. Sus artesanías ya cuentan con denominación de origen.</p>
+              <span class="font-label-md lg:text-sm text-label-md font-semibold text-on-surface truncate">Candelabros de cobre</span>
             </div>
+            <p class="font-body-sm lg:text-sm text-[11px] lg:text-[13px] leading-tight lg:leading-relaxed text-on-surface-variant">En Santa Clara del Cobre, el trabajo del cobre martillado tiene raíces prehispánicas. Sus artesanías ya cuentan con denominación de origen.</p>
+          </div>
 
-            <!-- Catrinas -->
-            <div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1.5 shadow-sm border border-outline/10">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-md bg-surface-container-high text-secondary flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">palette</span>
-                </div>
-                <span class="font-label-md text-label-md font-semibold text-on-surface truncate">Catrinas</span>
+          <div class="bg-surface-container rounded-lg lg:rounded-xl p-2.5 lg:p-4 flex flex-col gap-1.5 lg:gap-2 shadow-sm border border-outline/10 hover:border-outline/30 transition-colors">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 lg:w-9 lg:h-9 rounded-md bg-surface-container-high text-secondary flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px] lg:text-[20px]">palette</span>
               </div>
-              <p class="font-body-sm text-[11px] leading-tight text-on-surface-variant">Las primeras catrinas de barro de Capula aparecieron en los años setenta, cuando Juan Torres se inspiró en el personaje de Posada. Hoy hay alrededor de 250 talleres dedicados a ellas.</p>
+              <span class="font-label-md lg:text-sm text-label-md font-semibold text-on-surface truncate">Catrinas</span>
             </div>
+            <p class="font-body-sm lg:text-sm text-[11px] lg:text-[13px] leading-tight lg:leading-relaxed text-on-surface-variant">Las primeras catrinas de barro de Capula aparecieron en los años setenta, cuando Juan Torres se inspiró en el personaje de Posada. Hoy hay alrededor de 250 talleres dedicados a ellas.</p>
+          </div>
 
-            <!-- Canoas -->
-            <div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1.5 shadow-sm border border-outline/10">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-md bg-surface-container-high text-primary flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">directions_boat</span>
-                </div>
-                <span class="font-label-md text-label-md font-semibold text-on-surface truncate">Canoas</span>
+          <div class="bg-surface-container rounded-lg lg:rounded-xl p-2.5 lg:p-4 flex flex-col gap-1.5 lg:gap-2 shadow-sm border border-outline/10 hover:border-outline/30 transition-colors">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 lg:w-9 lg:h-9 rounded-md bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px] lg:text-[20px]">directions_boat</span>
               </div>
-              <p class="font-body-sm text-[11px] leading-tight text-on-surface-variant">En la noche del 1 de noviembre, la gente navega en canoas iluminadas con velas hacia el panteón de Janitzio, donde rodea las tumbas con ofrendas y cempasúchil. En el Word se llaman icharutas o tirikua.</p>
+              <span class="font-label-md lg:text-sm text-label-md font-semibold text-on-surface truncate">Canoas</span>
             </div>
+            <p class="font-body-sm lg:text-sm text-[11px] lg:text-[13px] leading-tight lg:leading-relaxed text-on-surface-variant">En la noche del 1 de noviembre, la gente navega en canoas iluminadas con velas hacia el panteón de Janitzio, donde rodea las tumbas con ofrendas y cempasúchil. En el Word se llaman icharutas o tirikua.</p>
+          </div>
 
-            <!-- Arco -->
-            <div class="bg-surface-container rounded-lg p-2.5 flex flex-col gap-1.5 shadow-sm border border-outline/10">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-md bg-surface-container-high text-tertiary flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-[18px]">restaurant</span>
-                </div>
-                <span class="font-label-md text-label-md font-semibold text-on-surface truncate">Arco u’atsakurï</span>
+          <div class="bg-surface-container rounded-lg lg:rounded-xl p-2.5 lg:p-4 flex flex-col gap-1.5 lg:gap-2 shadow-sm border border-outline/10 hover:border-outline/30 transition-colors">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 lg:w-9 lg:h-9 rounded-md bg-surface-container-high text-tertiary flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px] lg:text-[20px]">restaurant</span>
               </div>
-              <p class="font-body-sm text-[11px] leading-tight text-on-surface-variant">Es el portal por el que las almas reciben permiso para venir. Su forma de cruz une los cuatro puntos cardinales, y las tres cruces superiores representan el nivel celestial.</p>
+              <span class="font-label-md lg:text-sm text-label-md font-semibold text-on-surface truncate">Arco u’atsakurï</span>
+            </div>
+            <p class="font-body-sm lg:text-sm text-[11px] lg:text-[13px] leading-tight lg:leading-relaxed text-on-surface-variant">Es el portal por el que las almas reciben permiso para venir. Su forma de cruz une los cuatro puntos cardinales, y las tres cruces superiores representan el nivel celestial.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CALAVERITA ========== -->
+      <section class="w-full px-margin md:px-8 lg:px-12 pb-space-xl lg:pb-24 flex flex-col gap-space-md">
+        <div class="relative w-full rounded-xl lg:rounded-2xl bg-surface-container-low p-space-md lg:p-8 flex flex-col lg:grid lg:grid-cols-[1fr_auto] lg:gap-6 shadow-lg overflow-hidden">
+          <!-- Header + textos -->
+          <div class="flex flex-col gap-space-md">
+            <div class="flex items-center justify-between gap-2 lg:justify-start lg:gap-4">
+              <div class="flex items-center gap-1.5 text-primary">
+                <span class="material-symbols-outlined text-[16px]">history_edu</span>
+                <span class="font-label-caption text-label-caption uppercase tracking-widest font-semibold">Calaverita literaria</span>
+              </div>
+              <button class="px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-caption text-[11px] uppercase tracking-wider shrink-0 flex items-center gap-1 active:scale-95 transition-transform"
+                      id="audio-pill-btn" type="button">
+                <span class="material-symbols-outlined text-[14px]" id="audio-pill-icon">play_arrow</span>
+                <span id="audio-pill-text">Escuchar</span>
+              </button>
+            </div>
+            <p class="font-body-sm lg:text-base text-body-sm text-on-surface-variant leading-snug">
+              En México, la muerte también se recibe con una sonrisa. A continuación, una calaverita escrita con mucho afecto por una compañera.
+            </p>
+
+            <div class="px-3 py-2 lg:px-5 lg:py-4 rounded-lg bg-surface-container-high/90 flex items-start gap-2 border-l-2 border-primary">
+              <div id="calaverita-texto" class="font-body-sm text-[11px] md:text-[13px] lg:text-sm italic text-primary leading-snug lg:leading-relaxed flex-1 space-y-3 lg:space-y-4">
+                <p>La Parca ya ronda por Ciencia y Tecnología, buscando a Rebeca Haro con gran algarabía, tu ciclo en esta dirección ya llegó a su fin, te vas conmigo al panteón a tocar el violín.</p>
+                <p>Pero Rebeca, astuta, le dijo con gran soltura: «No me lleves al hoyo, que voy a otra aventura, prepara ya mis maletas, mi visa y mi equipaje, ¡que hasta la Embajada de la India voy a emprender mi viaje!».</p>
+                <p>La muerte quedó asombrada con tanto misticismo, cambió su guadaña azteca por clases de hinduismo; dejas la Ciencia y Tecnología por tierras del Taj Mahal, allá te espero, Rebeca, a tu destino final.</p>
+                <p>Hoy los pasillos de Ciencia se quedan con gran tristeza, despidiendo a la colega que viaja con gran presteza. ¡Buen viaje tengas, Rebeca, que el éxito te sonría, mientras la Flaca te extraña aquí en Tecnología!</p>
+              </div>
+              <span class="font-label-caption text-[10px] text-outline shrink-0">VOZ</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ========== CALAVERITA LITERARIA ========== -->
-      <section class="w-full px-margin md:px-8 pb-space-xl flex flex-col gap-space-md">
-        <div class="relative w-full rounded-xl bg-surface-container-low p-space-md flex flex-col gap-space-md shadow-lg overflow-hidden">
-          <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-1.5 text-primary">
-              <span class="material-symbols-outlined text-[16px]">history_edu</span>
-              <span class="font-label-caption text-label-caption uppercase tracking-widest font-semibold">Calaverita literaria</span>
-            </div>
-            <button class="px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-caption text-[11px] uppercase tracking-wider shrink-0 flex items-center gap-1 active:scale-95 transition-transform"
-                    id="audio-pill-btn" type="button">
-              <span class="material-symbols-outlined text-[14px]" id="audio-pill-icon">play_arrow</span>
-              <span id="audio-pill-text">Escuchar</span>
-            </button>
-          </div>
-          <p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
-            En México, la muerte también se recibe con una sonrisa.
-          </p>
-          <p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
-            A continuación, una calaverita escrita con mucho afecto por una compañera.
-          </p>
+      <!-- ========== ¿QUÉ ES? + LEYENDA ========== -->
+      <section class="w-full px-margin md:px-8 lg:px-12 pb-space-xl lg:pb-24 flex flex-col gap-space-md" id="voto">
+        <div class="relative w-full rounded-2xl bg-gradient-to-b from-surface-container-high to-surface-container-low p-space-md lg:p-10 shadow-2xl flex flex-col gap-space-md lg:gap-8 overflow-hidden">
+          <div class="absolute -top-12 -left-12 w-48 lg:w-72 h-48 lg:h-72 rounded-full bg-primary-container/25 blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-10 -right-10 w-44 lg:w-72 h-44 lg:h-72 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
 
-          <div class="px-3 py-2 rounded-lg bg-surface-container-high/90 flex items-start gap-2 border-l-2 border-primary">
-            <div id="calaverita-texto" class="font-body-sm text-[11px] md:text-[13px] italic text-primary leading-snug flex-1 space-y-3">
-              <p>La Parca ya ronda por Ciencia y Tecnología, buscando a Rebeca Haro con gran algarabía, tu ciclo en esta dirección ya llegó a su fin, te vas conmigo al panteón a tocar el violín.</p>
-
-              <p>Pero Rebeca, astuta, le dijo con gran soltura: «No me lleves al hoyo, que voy a otra aventura, prepara ya mis maletas, mi visa y mi equipaje, ¡que hasta la Embajada de la India voy a emprender mi viaje!».</p>
-
-              <p>La muerte quedó asombrada con tanto misticismo, cambió su guadaña azteca por clases de hinduismo; dejas la Ciencia y Tecnología por tierras del Taj Mahal, allá te espero, Rebeca, a tu destino final.</p>
-
-              <p>Hoy los pasillos de Ciencia se quedan con gran tristeza, despidiendo a la colega que viaja con gran presteza. ¡Buen viaje tengas, Rebeca, que el éxito te sonría, mientras la Flaca te extraña aquí en Tecnología!</p>
-            </div>
-            <span class="font-label-caption text-[10px] text-outline shrink-0">VOZ</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== SECCIÓN ¿QUÉ ES? + LEYENDA ========== -->
-      <section class="w-full px-margin md:px-8 pb-space-xl flex flex-col gap-space-md" id="voto">
-        <div class="relative w-full rounded-2xl bg-gradient-to-b from-surface-container-high to-surface-container-low p-space-md shadow-2xl flex flex-col gap-space-md overflow-hidden">
-          <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-primary-container/25 blur-3xl pointer-events-none"></div>
-          <div class="absolute -bottom-10 -right-10 w-44 h-44 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
-
-          <div class="flex flex-col items-center text-center gap-space-xs">
+          <!-- ¿Qué es? -->
+          <div class="flex flex-col items-center text-center gap-space-xs lg:gap-3 relative z-10">
             <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-tertiary-container/30 text-tertiary font-label-caption text-label-caption font-semibold uppercase tracking-widest shadow-sm">
               <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">how_to_vote</span>
               <span>¿Qué es?</span>
             </div>
-            <h3 class="font-headline-md md:text-headline-lg text-headline-md md:text-headline-lg text-on-surface leading-tight">Animecha Kejtsïtakua</h3>
-            <p class="font-body-sm md:text-body-md text-body-sm md:text-body-md text-on-surface-variant">
+            <h3 class="font-headline-md lg:text-4xl text-headline-md text-on-surface leading-tight">Animecha Kejtsïtakua</h3>
+            <p class="font-body-sm md:text-body-md lg:text-lg text-body-sm md:text-body-md max-w-2xl text-on-surface-variant lg:leading-relaxed">
               Significa "ofrenda a las ánimas" o "fiesta de las ánimas" en lengua purépecha. Es un solemne y ancestral ritual purépecha que celebra la vida más que la misma muerte.
             </p>
           </div>
 
-          <div class="w-full rounded-xl overflow-hidden relative shadow-md">
-            <img class="w-full h-auto block"
-                 alt="Equipo de AMEXCID posando junto a la ofrenda de Día de Muertos"
-                 src="img/IMG_0865.jpg"
-                 loading="lazy">
+          <!-- Foto equipo (más ancha en desktop) -->
+          <div class="w-full lg:max-w-3xl lg:mx-auto rounded-xl overflow-hidden relative shadow-md">
+            <img class="w-full h-auto block" alt="Equipo de AMEXCID posando junto a la ofrenda de Día de Muertos"
+                 src="img/IMG_0865.jpg" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 via-transparent to-transparent flex items-end p-space-sm">
               <span class="font-label-caption text-label-caption text-on-surface uppercase tracking-wider font-semibold">AMEXCID</span>
             </div>
           </div>
 
-          <div class="p-space-md rounded-xl bg-surface-container-lowest/70 backdrop-blur-md flex flex-col items-center gap-space-xs text-center shadow-inner">
+          <!-- Leyenda (más ancha y legible en desktop) -->
+          <div class="p-space-md lg:p-8 rounded-xl bg-surface-container-lowest/70 backdrop-blur-md flex flex-col items-center gap-space-xs lg:gap-3 text-center shadow-inner relative z-10">
             <span class="font-label-caption text-label-caption uppercase tracking-widest text-outline">La leyenda de</span>
-            <span class="font-headline-md text-headline-md text-tertiary font-bold tracking-wider">Mintzita e Itzihuapa</span>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">
-              El Origen de la Noche de las Ánimas
-            </p>
+            <span class="font-headline-md lg:text-3xl text-headline-md text-tertiary font-bold tracking-wider">Mintzita e Itzihuapa</span>
+            <p class="font-body-sm lg:text-base text-body-sm text-on-surface-variant">El Origen de la Noche de las Ánimas</p>
 
-            <div class="space-y-3 text-left max-w-prose">
-              <p class="font-label-caption md:text-[12px] text-label-caption text-outline leading-relaxed">
+            <div class="space-y-3 lg:space-y-4 text-left max-w-prose lg:max-w-3xl mt-2">
+              <p class="font-label-caption md:text-[12px] lg:text-[14px] text-label-caption text-outline leading-relaxed">
                 La historia comienza en tiempos de la conquista española. Mintzita, una bella princesa e hija de Tzintzicha, el último rey de Tzintzuntzan, estaba profundamente enamorada de Itzihuapa, el noble príncipe heredero de la isla de Janitzio e hijo del rey Taré.
               </p>
-              <p class="font-label-caption md:text-[12px] text-label-caption text-outline leading-relaxed">
+              <p class="font-label-caption md:text-[12px] lg:text-[14px] text-label-caption text-outline leading-relaxed">
                 Su amor era pleno y planeaban unirse en matrimonio, pero el destino cambió su rumbo de forma trágica. El despiadado conquistador Nuño de Guzmán capturó al rey Tzintzicha, exigiendo un rescate colosal de oro y riquezas a cambio de su vida.
               </p>
-              <p class="font-label-caption md:text-[12px] text-label-caption text-outline leading-relaxed">
+              <p class="font-label-caption md:text-[12px] lg:text-[14px] text-label-caption text-outline leading-relaxed">
                 Desesperada por salvar a su padre, la princesa Mintzita confió en Itzihuapa un secreto milenario: la existencia de un tesoro sagrado oculto por sus antepasados en el fondo del lago de Pátzcuaro, justo entre Janitzio y La Pacanda. Sin dudarlo, el valiente príncipe se ofreció a sumergirse en las aguas profundas para rescatar el oro.
               </p>
-              <p class="font-label-caption md:text-[12px] text-label-caption text-outline leading-relaxed">
+              <p class="font-label-caption md:text-[12px] lg:text-[14px] text-label-caption text-outline leading-relaxed">
                 Sin embargo, el tesoro no estaba desamparado. Al descender a los abismos del lago, Itzihuapa fue sorprendido por los espíritus de veinte antiguos remeros, quienes custodiaban la riqueza sagrada. Las sombras lo atraparon y lo sumergieron para siempre, convirtiéndolo en el vigésimo primer guardián de las aguas. Mintzita, rota de dolor, murió esperando el regreso de su amado.
               </p>
-              <p class="font-label-caption md:text-[12px] text-label-caption text-outline leading-relaxed font-bold">
+              <p class="font-label-caption md:text-[12px] lg:text-[14px] text-label-caption text-outline leading-relaxed font-bold">
                 La tradición cuenta que cada Noche de Muertos, al parpadear la primera luz de los cirios, el lago despierta. Los veintiún guardianes emergen de las profundidades y suben al panteón de Janitzio.
               </p>
-              <p class="font-label-caption md:text-[12px] text-label-caption text-outline leading-relaxed font-bold">
+              <p class="font-label-caption md:text-[12px] lg:text-[14px] text-label-caption text-outline leading-relaxed font-bold">
                 En esa noche mágica, las almas de Mintzita e Itzihuapa se reencuentran frente a las ofrendas. Mientras los vivos los honran con flores de cempasúchil, copal y cantos, los príncipes purépechas caminan juntos una vez más, recordándonos que el amor verdadero trasciende el tiempo y la muerte.
               </p>
             </div>
           </div>
 
-          <p class="font-label-caption text-label-caption text-center text-outline">
+          <p class="font-label-caption text-label-caption text-center text-outline relative z-10">
             Diosï Meiamu (Gracias en Purépecha) por visitar nuestra ofrenda.
           </p>
         </div>
       </section>
 
-    </div><!-- /.max-w-3xl -->
+    </div><!-- /.max-w-7xl -->
 
-    <!-- ==================== NAV INFERIOR ==================== -->
-    <nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-8px_32px_rgba(0,0,0,0.6)]">
+    <!-- ==================== NAV INFERIOR (solo móvil/tablet) ==================== -->
+    <nav class="nav-mobile-only fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-8px_32px_rgba(0,0,0,0.6)]">
       <div class="max-w-3xl mx-auto flex items-center justify-around h-16 px-space-xs">
         <a aria-current="page" href="#"
            class="nav-link flex flex-col items-center justify-center min-w-[56px] h-12 px-2 rounded-xl transition-all gap-0.5 active:scale-95 text-primary bg-primary/10 shadow-[0_0_16px_rgba(245,124,0,0.25)]">
@@ -555,13 +570,15 @@
     </nav>
   </main>
 
-  <!-- ========== MODAL: PROCESO DE CREACIÓN ========== -->
+  <!-- ========== MODALES (fuera de main para scroll correcto) ========== -->
+
+  <!-- Modal Proceso -->
   <div id="modal-galeria" class="hidden fixed inset-0 z-50 bg-background/95 backdrop-blur-md p-space-md flex-col overflow-y-auto">
-    <div class="max-w-3xl mx-auto w-full">
+    <div class="max-w-4xl mx-auto w-full">
       <div class="flex items-center justify-between pb-space-sm sticky top-0 z-10 bg-background/80 backdrop-blur-md -mx-space-md px-space-md pt-space-sm">
         <div class="flex items-center gap-2">
           <span class="material-symbols-outlined text-primary text-[20px]">construction</span>
-          <span class="font-headline-sm text-headline-sm text-on-surface">Proceso de Creación</span>
+          <span class="font-headline-sm lg:text-2xl text-headline-sm text-on-surface">Proceso de Creación</span>
         </div>
         <button type="button" id="btn-cerrar-modal"
                 class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface active:scale-95 transition-transform">
@@ -569,7 +586,7 @@
         </button>
       </div>
 
-      <div class="flex flex-col gap-space-md py-space-md">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md py-space-md">
         <div class="rounded-xl overflow-hidden bg-surface-container shadow-lg">
           <img class="w-full aspect-[4/3] object-cover" src="img/IMG_0726.jpg" alt="Proceso de creación - Paso 1" loading="lazy">
           <div class="p-space-sm bg-surface-container-high flex flex-col gap-1">
@@ -602,7 +619,7 @@
           </div>
         </div>
 
-        <div class="rounded-xl overflow-hidden bg-surface-container shadow-lg">
+        <div class="rounded-xl overflow-hidden bg-surface-container shadow-lg md:col-span-2 md:max-w-2xl md:mx-auto md:w-full">
           <img class="w-full aspect-[4/3] object-cover" src="img/detalles.jpg" alt="Proceso de creación - Paso 5" loading="lazy">
           <div class="p-space-sm bg-surface-container-high flex flex-col gap-1">
             <span class="font-label-lg text-label-lg text-primary font-semibold">Paso 5 · Detalles</span>
@@ -618,9 +635,9 @@
     </div>
   </div>
 
-  <!-- ========== MODAL: LIGHTBOX FOTO ========== -->
+  <!-- Modal Lightbox Foto -->
   <div id="modal-foto" class="hidden fixed inset-0 z-[60] bg-background/95 backdrop-blur-md p-space-md flex-col justify-center overflow-y-auto">
-    <div class="max-w-3xl mx-auto w-full">
+    <div class="max-w-5xl mx-auto w-full">
       <div class="flex items-center justify-between pb-space-sm">
         <span class="font-label-caption text-label-caption uppercase tracking-widest text-primary">Vista ampliada</span>
         <button type="button" id="btn-cerrar-foto"
@@ -629,10 +646,10 @@
         </button>
       </div>
       <div class="rounded-xl overflow-hidden bg-surface-container shadow-2xl">
-        <img id="foto-ampliada-img" class="w-full max-h-[60vh] md:max-h-[70vh] object-contain bg-black" src="" alt="">
-        <div class="p-space-sm bg-surface-container-high flex flex-col gap-1">
-          <span id="foto-ampliada-titulo" class="font-label-lg text-label-lg text-primary font-semibold"></span>
-          <p id="foto-ampliada-desc" class="font-body-sm text-body-sm text-on-surface-variant"></p>
+        <img id="foto-ampliada-img" class="w-full max-h-[60vh] lg:max-h-[75vh] object-contain bg-black" src="" alt="">
+        <div class="p-space-sm lg:p-5 bg-surface-container-high flex flex-col gap-1">
+          <span id="foto-ampliada-titulo" class="font-label-lg lg:text-lg text-label-lg text-primary font-semibold"></span>
+          <p id="foto-ampliada-desc" class="font-body-sm lg:text-base text-body-sm text-on-surface-variant"></p>
         </div>
       </div>
       <button type="button" id="btn-cerrar-foto-2"
@@ -784,8 +801,8 @@
       if (speechSupported) window.speechSynthesis.cancel();
     });
 
-    // ============ NAV ACTIVO POR SCROLL ============
-    const navLinks = document.querySelectorAll('.nav-link');
+    // ============ NAV ACTIVO POR SCROLL (solo móvil) ============
+    const navLinks = document.querySelectorAll('.nav-mobile-only .nav-link');
     const secciones = [
       { id: '', el: null },
       { id: 'galeria-perspectivas', el: document.getElementById('galeria-perspectivas') },
@@ -794,6 +811,7 @@
     ];
 
     window.addEventListener('scroll', () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) return; // desktop usa nav superior
       const scrollY = window.scrollY + 200;
       let actual = '';
       secciones.forEach(s => {
@@ -806,7 +824,7 @@
         link.classList.toggle('shadow-[0_0_16px_rgba(245,124,0,0.25)]', isActive);
         link.classList.toggle('text-on-surface-variant', !isActive);
       });
-    });
+    }, { passive: true });
   </script>
 
 </body>
