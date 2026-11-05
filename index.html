@@ -73,46 +73,61 @@
     };
   </script>
 
-  <style>
-    @layer base {
-      html, body { width: 100%; margin: 0; padding: 0; }
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: calc(5rem + env(safe-area-inset-top, 0px));
-        overflow-y: auto;
-      }
-      body {
-        background-color: #121221;
-        overflow-x: clip;
-        overflow-y: auto;
-        overscroll-behavior-y: none;
-      }
-      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
-      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
-      main > :first-child { margin-top: 0 !important; }
-      main > :last-child { margin-bottom: 0 !important; }
+
+<style>
+  @layer base {
+    /* ✅ html y body SIN overflow-y para que el scroller sea UNO solo (el html/root) */
+    html, body { width: 100%; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(5rem + env(safe-area-inset-top, 0px));
     }
+    body {
+      background-color: #121221;
+      /* ✅ solo bloqueamos el overflow horizontal, NO el vertical */
+      overflow-x: clip;
+      /* ❌ NO pongas overflow-y: auto aquí */
+      /* ❌ NO pongas overscroll-behavior aquí */
+    }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    main > :first-child { margin-top: 0 !important; }
+    main > :last-child { margin-bottom: 0 !important; }
+  }
+
+  /* Scrollbar bonito en desktop (opcional) */
+  @media (min-width: 1024px) {
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #121221; }
     ::-webkit-scrollbar-thumb { background: #343344; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #574235; }
+  }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
+  }
 
-    /* En desktop mostramos el nav superior; en móvil el inferior */
-    @media (min-width: 1024px) {
-      .nav-mobile-only { display: none !important; }
-    }
-    @media (max-width: 1023.98px) {
-      .nav-desktop-only { display: none !important; }
-    }
-  </style>
+  /* Nav desktop vs móvil */
+  @media (min-width: 1024px) {
+    .nav-mobile-only { display: none !important; }
+  }
+  @media (max-width: 1023.98px) {
+    .nav-desktop-only { display: none !important; }
+  }
+
+  /* ✅ FIX CRÍTICO: cuando un modal está abierto, bloquear scroll del body SIN romperlo después */
+  body.modal-open {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px); /* evita "salto" al abrir modal */
+  }
+</style>
+
+
+  
 </head>
 
 <body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container">
@@ -662,61 +677,81 @@
   <!-- ==================== SCRIPT ==================== -->
   <script>
     // ============ MODALES ============
-    const modalProceso = document.getElementById('modal-galeria');
-    const modalFoto    = document.getElementById('modal-foto');
-    const btnAbrir     = document.getElementById('btn-abrir-modal');
+// ============ MODALES ============
+const modalProceso = document.getElementById('modal-galeria');
+const modalFoto    = document.getElementById('modal-foto');
+const btnAbrir     = document.getElementById('btn-abrir-modal');
 
-    function abrirModalProceso() {
-      modalProceso.classList.remove('hidden');
-      modalProceso.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-    function cerrarModalProceso() {
-      modalProceso.classList.add('hidden');
-      modalProceso.classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-    btnAbrir.addEventListener('click', abrirModalProceso);
-    document.getElementById('btn-cerrar-modal').addEventListener('click', cerrarModalProceso);
-    document.getElementById('btn-cerrar-modal-2').addEventListener('click', cerrarModalProceso);
-    modalProceso.addEventListener('click', (e) => {
-      if (e.target === modalProceso) cerrarModalProceso();
-    });
+// ✅ Helpers para bloquear/desbloquear scroll SIN romper la rueda del ratón
+let scrollYGuardado = 0;
+function lockScroll() {
+  scrollYGuardado = window.scrollY;
+  const sbWidth = window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.setProperty('--scrollbar-width', sbWidth + 'px');
+  document.body.classList.add('modal-open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollYGuardado}px`;
+  document.body.style.width = '100%';
+}
+function unlockScroll() {
+  document.body.classList.remove('modal-open');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollYGuardado);
+}
 
-    const fotoImg     = document.getElementById('foto-ampliada-img');
-    const fotoTitulo  = document.getElementById('foto-ampliada-titulo');
-    const fotoDesc    = document.getElementById('foto-ampliada-desc');
+function abrirModalProceso() {
+  modalProceso.classList.remove('hidden');
+  modalProceso.classList.add('flex');
+  lockScroll();          // ✅ antes era: document.body.style.overflow = 'hidden';
+}
+function cerrarModalProceso() {
+  modalProceso.classList.add('hidden');
+  modalProceso.classList.remove('flex');
+  unlockScroll();        // ✅ antes era: document.body.style.overflow = '';
+}
+btnAbrir.addEventListener('click', abrirModalProceso);
+document.getElementById('btn-cerrar-modal').addEventListener('click', cerrarModalProceso);
+document.getElementById('btn-cerrar-modal-2').addEventListener('click', cerrarModalProceso);
+modalProceso.addEventListener('click', (e) => {
+  if (e.target === modalProceso) cerrarModalProceso();
+});
 
-    function abrirFoto(card) {
-      fotoImg.src = card.dataset.src;
-      fotoImg.alt = card.dataset.alt || '';
-      fotoTitulo.textContent = card.dataset.titulo || '';
-      fotoDesc.textContent   = card.dataset.desc || '';
-      modalFoto.classList.remove('hidden');
-      modalFoto.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-    function cerrarFoto() {
-      modalFoto.classList.add('hidden');
-      modalFoto.classList.remove('flex');
-      document.body.style.overflow = '';
-      fotoImg.src = '';
-    }
+const fotoImg     = document.getElementById('foto-ampliada-img');
+const fotoTitulo  = document.getElementById('foto-ampliada-titulo');
+const fotoDesc    = document.getElementById('foto-ampliada-desc');
 
-    document.querySelectorAll('.foto-card').forEach(card => {
-      card.addEventListener('click', () => abrirFoto(card));
-    });
-    document.getElementById('btn-cerrar-foto').addEventListener('click', cerrarFoto);
-    document.getElementById('btn-cerrar-foto-2').addEventListener('click', cerrarFoto);
-    modalFoto.addEventListener('click', (e) => {
-      if (e.target === modalFoto) cerrarFoto();
-    });
+function abrirFoto(card) {
+  fotoImg.src = card.dataset.src;
+  fotoImg.alt = card.dataset.alt || '';
+  fotoTitulo.textContent = card.dataset.titulo || '';
+  fotoDesc.textContent   = card.dataset.desc || '';
+  modalFoto.classList.remove('hidden');
+  modalFoto.classList.add('flex');
+  lockScroll();          // ✅ antes era: document.body.style.overflow = 'hidden';
+}
+function cerrarFoto() {
+  modalFoto.classList.add('hidden');
+  modalFoto.classList.remove('flex');
+  unlockScroll();        // ✅ antes era: document.body.style.overflow = '';
+  fotoImg.src = '';
+}
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      if (!modalFoto.classList.contains('hidden'))    cerrarFoto();
-      if (!modalProceso.classList.contains('hidden')) cerrarModalProceso();
-    });
+document.querySelectorAll('.foto-card').forEach(card => {
+  card.addEventListener('click', () => abrirFoto(card));
+});
+document.getElementById('btn-cerrar-foto').addEventListener('click', cerrarFoto);
+document.getElementById('btn-cerrar-foto-2').addEventListener('click', cerrarFoto);
+modalFoto.addEventListener('click', (e) => {
+  if (e.target === modalFoto) cerrarFoto();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (!modalFoto.classList.contains('hidden'))    cerrarFoto();
+  if (!modalProceso.classList.contains('hidden')) cerrarModalProceso();
+});
 
     // ============ AUDIO ============
     const audioBtn = document.getElementById('audio-pill-btn');
